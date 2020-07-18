@@ -2,7 +2,7 @@ from Scene import Scene
 from MainScene import MainScene
 import pygame
 from GameAudio import GameAudio
-
+import time
 
 class StartScene(Scene):
     gameMusic = GameAudio(0)
@@ -14,8 +14,7 @@ class StartScene(Scene):
         )
         self.shouldStart = False
 
-        #gameAudio = GameAudio(0) # channel 0
-        self.gameMusic.playLooped('src/assets/audio/bgmLoopIntro.wav', 0.7)
+        #self.gameMusic.playLooped('src/assets/audio/bgmLoopIntro.wav', 0.7)
 
 
     def handleEvent(self, event):

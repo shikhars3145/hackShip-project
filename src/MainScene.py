@@ -3,7 +3,6 @@ from config import SCREEN_HEIGHT
 from Player import Player
 from Garbage import Garbage
 from GameAudio import GameAudio
-import time
 import pygame
 
 

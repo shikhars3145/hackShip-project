@@ -2,10 +2,14 @@ from Scene import Scene
 from config import SCREEN_HEIGHT
 from Player import Player
 from Garbage import Garbage
+from GameAudio import GameAudio
+import time
 import pygame
 
 
+
 class MainScene(Scene):
+    gameMusic = GameAudio(1)
     def __init__(self):
         super().__init__()
 
@@ -16,6 +20,9 @@ class MainScene(Scene):
         # Garbage
         self.garbage = Garbage()
         self.garbageGroup = pygame.sprite.RenderPlain(self.garbage)
+
+        # Audio
+        self.gameMusic.playLooped('src/assets/audio/bgmLoop.wav', 0.7)
 
     def handleEvent(self, event):
         # Player movement
@@ -41,4 +48,3 @@ class MainScene(Scene):
         # will change it to spiritecollide after garbage is in a sprite group
         if pygame.sprite.collide_mask(self.player, self.garbage):
             self.garbage.reset()
-

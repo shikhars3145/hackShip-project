@@ -4,6 +4,6 @@ class Scene:
         """Handle pygame event."""
         pass
 
-    def render(self, state):
+    def render(self, screen):
         """Render contents on screen."""
         pass

@@ -23,3 +23,7 @@ class StartScene(Scene):
         if self.shouldStart:
             return MainScene()
         return self
+
+    def checkCollision(self):
+        pass
+    

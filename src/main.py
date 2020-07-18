@@ -1,6 +1,6 @@
 import pygame
 import os
-from MainScene import MainScene
+from StartScene import StartScene
 
 # Paths
 current_path = os.path.dirname(__file__)  # path to main.py
@@ -23,7 +23,7 @@ icon = pygame.image.load((os.path.join(images_path, "icon.png")))
 pygame.display.set_icon(icon)
 
 # Scene
-scene = MainScene()
+scene = StartScene()
 
 # Game Loop
 RUNNING = True
@@ -38,3 +38,4 @@ while RUNNING:
 
     scene.render(screen)
     pygame.display.update()
+    scene = scene.nextScene()

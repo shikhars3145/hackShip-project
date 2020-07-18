@@ -28,7 +28,7 @@ playerX = 30
 playerY = 268
 playerY_Change = 0
 
-
+# Function to render Player
 def player(x, y):
     screen.blit(playerImg, (x, y))
 
@@ -43,6 +43,7 @@ while RUNNING:
         if event.type == pygame.QUIT:
             RUNNING = False
 
+        # Player movement
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 playerY_Change = -0.1
@@ -54,5 +55,13 @@ while RUNNING:
                 playerY_Change = 0
 
     playerY += playerY_Change
+
+    # Player Boundary
+    if playerY > 536:
+        playerY = 536
+    if playerY < 0:
+        playerY = 0
+
+    # Render Player
     player(playerX, playerY)
     pygame.display.update()

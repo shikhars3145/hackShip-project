@@ -1,6 +1,7 @@
 from Scene import Scene
 from config import SCREEN_HEIGHT
 from Player import Player
+from Garbage import Garbage
 import pygame
 
 
@@ -11,6 +12,10 @@ class MainScene(Scene):
         # Player
         self.player = Player((30, (SCREEN_HEIGHT - 64) / 2))
         self.playerGroup = pygame.sprite.RenderPlain(self.player)
+
+        # Garbage
+        self.garbage = Garbage()
+        self.garbageGroup = pygame.sprite.RenderPlain(self.garbage)
 
     def handleEvent(self, event):
         # Player movement
@@ -26,5 +31,8 @@ class MainScene(Scene):
 
     def render(self, screen):
         self.playerGroup.update()
+        self.garbageGroup.update()
         # Render Player
         self.playerGroup.draw(screen)
+        # Render Garbage
+        self.garbageGroup.draw(screen)

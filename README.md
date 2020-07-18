@@ -36,6 +36,7 @@ Make sure you have up-to-date dependencies.
 - `requirements.txt` : List of dependencies of this project.
 - `src` : Source code directory.
     - `main.py` : Entrypoint of the game.
+    - `config.py` : Configuration module.
     - `Scene.py` : Scene is a class responsible for event handling
         & rendering.
     - `StartScene.py` : Start menu scene.

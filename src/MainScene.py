@@ -5,10 +5,12 @@ from Garbage import Garbage
 from GameAudio import GameAudio
 import pygame
 
-
+BMG_LOOP = 'src/assets/audio/bgmLoop.wav'
+TRASH_BOTTLE = 'src/assets/audio/trashBottle.wav'
 
 class MainScene(Scene):
     gameMusic = GameAudio(1)
+    trashFXbottle = GameAudio(2)
     def __init__(self):
         super().__init__()
 
@@ -27,7 +29,7 @@ class MainScene(Scene):
         self.scoreFont = pygame.font.Font('src/assets/fonts/Lato/Lato-Black.ttf', 32)
 
         # Audio
-        self.gameMusic.playLooped('src/assets/audio/bgmLoop.wav', 0.7)
+        self.gameMusic.playLooped(BMG_LOOP, 0.3)
 
     def handleEvent(self, event):
         # Player movement
@@ -56,4 +58,8 @@ class MainScene(Scene):
         for garbageInstance in self.garbageGroup:
             if pygame.sprite.collide_mask(self.player, garbageInstance):
                 self.scoreInt += 1
+
+                self.trashFXbottle.playFX(TRASH_BOTTLE, 0.15)
+                print("trash sound")
+
                 garbageInstance.reset()

@@ -3,6 +3,7 @@ from StartScene import StartScene
 from config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 # Initialize the pygame
+pygame.mixer.pre_init(44100, -16, 6, 512)
 pygame.init()
 
 

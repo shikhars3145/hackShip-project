@@ -6,6 +6,12 @@ class GameAudio:
     def __init__(self, channel):
         self.channel = channel
 
+    def playFX(self, filename, volume):
+        sound = pygame.mixer.Sound(filename)
+        sound.set_volume(volume)
+        channel = pygame.mixer.Channel(self.channel)
+        channel.play(sound, loops = 0, maxtime=0, fade_ms=0)
+
     def playLooped(self, filename, volume):
         sound = pygame.mixer.Sound(filename)
         sound.set_volume(volume)

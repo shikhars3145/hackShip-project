@@ -3,13 +3,6 @@ import os
 from StartScene import StartScene
 from config import SCREEN_HEIGHT, SCREEN_WIDTH
 
-# Paths
-current_path = os.path.dirname(__file__)  # path to main.py
-
-assets_path = os.path.join(current_path, "assets")  # the asssets folder path
-
-images_path = os.path.join(assets_path, "images")  # the images folder path
-
 # Initialize the pygame
 pygame.init()
 
@@ -20,7 +13,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # Title and Icon
 pygame.display.set_caption("hackShip project")
-icon = pygame.image.load((os.path.join(images_path, "icon.png")))
+icon = pygame.image.load("src/assets/images/icon.png")
 pygame.display.set_icon(icon)
 
 # Scene

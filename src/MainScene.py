@@ -16,13 +16,13 @@ class MainScene(Scene):
         # Player movement
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                self.player.velocity = (0, -0.1)
+                self.player.accel -= self.player.ACCEL_CONST
             if event.key == pygame.K_DOWN:
-                self.player.velocity = (0, 0.1)
+                self.player.accel += self.player.ACCEL_CONST
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                self.player.velocity = (0, 0)
+                self.player.accel = 0
 
     def render(self, screen):
         self.playerGroup.update()

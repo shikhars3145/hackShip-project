@@ -8,6 +8,10 @@ class Scene:
         """Render contents on screen."""
         pass
 
+    def checkCollision(self):
+        """Check if Collision happens between garbage and the player"""
+        pass
+
     def nextScene(self):
         """Return scene object for next frame"""
         # By default, do not transition to another scene.

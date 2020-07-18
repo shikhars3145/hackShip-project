@@ -1,7 +1,9 @@
-from GameState import GameState
-
-# Class responsible for rendering stuff on screen.
+# Class responsible for event handling and rendering
 class Scene:
-    def render(self, state: GameState):
+    def handleEvent(self, event):
+        """Handle pygame event."""
+        pass
+
+    def render(self, state):
         """Render contents on screen."""
         pass

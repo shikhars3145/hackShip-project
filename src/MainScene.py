@@ -36,3 +36,9 @@ class MainScene(Scene):
         self.playerGroup.draw(screen)
         # Render Garbage
         self.garbageGroup.draw(screen)
+
+    def checkCollision(self):
+        # will change it to spiritecollide after garbage is in a sprite group
+        if pygame.sprite.collide_mask(self.player, self.garbage):
+            self.garbage.reset()
+

@@ -15,7 +15,7 @@ Y_UPPER_LIM = SCREEN_HEIGHT - 36
 class Garbage(pygame.sprite.Sprite):
     def __init__(
         self,
-        position: Tuple[float, float] = (random.randint(SCREEN_WIDTH // 2 , X_UPPER_LIM), random.randint(Y_LOWER_LIM, Y_UPPER_LIM)),
+        position: Tuple[float, float] = (random.randint(SCREEN_WIDTH // 4 , X_UPPER_LIM), random.randint(Y_LOWER_LIM, Y_UPPER_LIM)),
         velocity: Tuple[float, float] = (random.randint(-150, -100), 0),
     ):
         super().__init__()

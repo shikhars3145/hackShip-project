@@ -14,8 +14,10 @@ class MainScene(Scene):
         self.playerGroup = pygame.sprite.RenderPlain(self.player)
 
         # Garbage
-        self.garbage = Garbage()
-        self.garbageGroup = pygame.sprite.RenderPlain(self.garbage)
+        self.garbageGroup = pygame.sprite.RenderPlain()
+        for i in range(5):
+            self.garbage = Garbage()
+            self.garbageGroup.add(self.garbage)
 
     def handleEvent(self, event):
         # Player movement
@@ -37,8 +39,10 @@ class MainScene(Scene):
         # Render Garbage
         self.garbageGroup.draw(screen)
 
+    
     def checkCollision(self):
-        # will change it to spiritecollide after garbage is in a sprite group
-        if pygame.sprite.collide_mask(self.player, self.garbage):
-            self.garbage.reset()
+        for garbageInstance in self.garbageGroup:
+            if pygame.sprite.collide_mask(self.player, garbageInstance):
+                garbageInstance.reset()
+    
 

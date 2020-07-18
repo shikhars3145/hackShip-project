@@ -58,8 +58,5 @@ class MainScene(Scene):
         for garbageInstance in self.garbageGroup:
             if pygame.sprite.collide_mask(self.player, garbageInstance):
                 self.scoreInt += 1
-
                 self.trashFXbottle.playFX(TRASH_BOTTLE, 0.15)
-                print("trash sound")
-
                 garbageInstance.reset()

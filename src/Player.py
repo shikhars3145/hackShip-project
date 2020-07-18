@@ -16,6 +16,7 @@ class Player(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.velocity = velocity
         self.DECCEL_VAL = 0.99
+        self.accel = 0
 
     def update(self):
         self.accelerate(self.accel)

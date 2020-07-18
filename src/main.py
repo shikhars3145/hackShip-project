@@ -1,6 +1,7 @@
 import pygame
 import os
 from StartScene import StartScene
+from config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 # Paths
 current_path = os.path.dirname(__file__)  # path to main.py
@@ -14,7 +15,7 @@ pygame.init()
 
 
 # Create the screen
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 
 # Title and Icon

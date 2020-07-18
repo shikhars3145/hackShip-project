@@ -1,5 +1,6 @@
 import pygame
 import os
+from MainScene import MainScene
 
 # Paths
 current_path = os.path.dirname(__file__)  # path to main.py
@@ -21,17 +22,8 @@ pygame.display.set_caption("hackShip project")
 icon = pygame.image.load((os.path.join(images_path, "icon.png")))
 pygame.display.set_icon(icon)
 
-
-# Player
-playerImg = pygame.image.load(os.path.join(images_path, "player.png"))
-playerX = 30
-playerY = 268
-playerY_Change = 0
-
-# Function to render Player
-def player(x, y):
-    screen.blit(playerImg, (x, y))
-
+# Scene
+scene = MainScene()
 
 # Game Loop
 RUNNING = True
@@ -42,26 +34,7 @@ while RUNNING:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             RUNNING = False
+        scene.handleEvent(event)
 
-        # Player movement
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                playerY_Change = -0.1
-            if event.key == pygame.K_DOWN:
-                playerY_Change = 0.1
-
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                playerY_Change = 0
-
-    playerY += playerY_Change
-
-    # Player Boundary
-    if playerY > 536:
-        playerY = 536
-    if playerY < 0:
-        playerY = 0
-
-    # Render Player
-    player(playerX, playerY)
+    scene.render(screen)
     pygame.display.update()

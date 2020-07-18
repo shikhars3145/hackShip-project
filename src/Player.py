@@ -18,6 +18,9 @@ class Player(pygame.sprite.Sprite):
         self.DECCEL_VAL = 0.99
 
     def update(self):
+        self.accelerate(self.accel)
+        if self.accel == 0:
+            self.deccelerate()
         self.position = (
             self.position[0] + self.velocity[0],
             self.position[1] + self.velocity[1],

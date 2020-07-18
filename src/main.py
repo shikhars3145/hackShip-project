@@ -1,5 +1,4 @@
 import pygame
-import os
 from StartScene import StartScene
 from config import SCREEN_HEIGHT, SCREEN_WIDTH
 

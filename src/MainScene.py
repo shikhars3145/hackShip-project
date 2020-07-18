@@ -1,5 +1,5 @@
 from Scene import Scene
-from config import SCREEN_HEIGHT, SCREEN_WIDTH
+from config import SCREEN_HEIGHT
 from Player import Player
 import pygame
 

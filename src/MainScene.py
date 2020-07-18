@@ -28,9 +28,6 @@ class MainScene(Scene):
                 self.accel = 0
 
     def render(self, screen):
-        self.player.accelerate(self.accel)
-        if self.accel == 0:
-            self.player.deccelerate()
         self.playerGroup.update()
         # Render Player
         self.playerGroup.draw(screen)

@@ -10,8 +10,8 @@ screen = pygame.display.set_mode((800, 600))
 
 # Title and Icon
 pygame.display.set_caption('hackShip project')
-# icon = pygame.image.load('./scuba-diver.png')
-# pygame.display.set_icon(icon)
+icon = pygame.image.load('src/scuba-diver.png')
+pygame.display.set_icon(icon)
 
 
 # Game Loop

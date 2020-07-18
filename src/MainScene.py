@@ -19,6 +19,10 @@ class MainScene(Scene):
             self.garbage = Garbage()
             self.garbageGroup.add(self.garbage)
 
+        # Scoring
+        self.scoreInt = 0
+        self.scoreFont = pygame.font.Font('src/assets/fonts/Lato/Lato-Black.ttf', 32)
+
     def handleEvent(self, event):
         # Player movement
         if event.type == pygame.KEYDOWN:
@@ -38,11 +42,14 @@ class MainScene(Scene):
         self.playerGroup.draw(screen)
         # Render Garbage
         self.garbageGroup.draw(screen)
+        # Render score
+        screen.blit(self.scoreFont.render(str(self.scoreInt), True, (255, 255, 255)), (20, 20))
 
     
     def checkCollision(self):
         for garbageInstance in self.garbageGroup:
             if pygame.sprite.collide_mask(self.player, garbageInstance):
+                self.scoreInt += 1
                 garbageInstance.reset()
     
 

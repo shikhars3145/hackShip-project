@@ -12,7 +12,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 
 # Title and Icon
-pygame.display.set_caption("hackShip project")
+pygame.display.set_caption("Trash hunt")
 icon = pygame.image.load("src/assets/images/icon.png")
 pygame.display.set_icon(icon)
 

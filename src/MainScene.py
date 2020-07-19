@@ -1,4 +1,5 @@
 from Scene import Scene
+import EndScene
 from config import (
     SCREEN_HEIGHT,
     SCREEN_WIDTH,
@@ -99,3 +100,9 @@ class MainScene(Scene):
             self.scoreFont.render(str(self.scoreInt), True, (255, 255, 255)),
             (20, 20),
         )
+
+    def nextScene(self):
+        if self.gameOver:
+            self.gameMusic.stop()
+            return EndScene.EndScene(self.scoreInt)
+        return self

@@ -26,14 +26,17 @@ class Garbage(pygame.sprite.Sprite):
     def __init__(
         self,
         position: Tuple[float, float],
-        velocity: Tuple[float, float] = (random.randint(-150, -100), 0),
+        velocity: Tuple[float, float] = None,
     ):
         super().__init__()
         self.image = pygame.image.load(getRandomGarbageImagePath())
         self.position = position
         self.rect = self.image.get_rect(center=position)
         self.mask = pygame.mask.from_surface(self.image)
-        self.velocity = velocity
+        if velocity is None:
+            self.velocity = (random.randint(-150, -100), 0)
+        else:
+            self.velocity = velocity
         self.lastUpdated = time_ns()
 
     def update(self):

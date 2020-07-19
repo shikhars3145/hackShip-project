@@ -14,7 +14,7 @@ class StartScene(Scene):
         )
         self.shouldStart = False
 
-        #self.gameMusic.playLooped('src/assets/audio/bgmLoopIntro.wav', 0.7)
+        self.gameMusic.playLooped('src/assets/audio/bgmLoopIntro.wav', 0.3)
 
 
     def handleEvent(self, event):

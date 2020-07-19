@@ -29,6 +29,3 @@ class StartScene(Scene):
             self.gameMusic.stop()
             return MainScene()
         return self
-
-    def checkCollision(self):
-        pass

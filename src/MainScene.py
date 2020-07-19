@@ -62,6 +62,14 @@ class MainScene(Scene):
     def render(self, screen):
         self.playerGroup.update()
         self.garbageGroup.update()
+
+        # Check Collision between garbage and the player
+        for garbageInstance in self.garbageGroup:
+            if pygame.sprite.collide_mask(self.player, garbageInstance):
+                self.scoreInt += 1
+                self.trashFXbottle.playFX(TRASH_BOTTLE, 0.15)
+                garbageInstance.reset()
+
         # Render Player
         self.playerGroup.draw(screen)
         # Render Garbage
@@ -71,10 +79,3 @@ class MainScene(Scene):
             self.scoreFont.render(str(self.scoreInt), True, (255, 255, 255)),
             (20, 20),
         )
-
-    def checkCollision(self):
-        for garbageInstance in self.garbageGroup:
-            if pygame.sprite.collide_mask(self.player, garbageInstance):
-                self.scoreInt += 1
-                self.trashFXbottle.playFX(TRASH_BOTTLE, 0.15)
-                garbageInstance.reset()

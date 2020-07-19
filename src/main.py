@@ -32,5 +32,4 @@ while RUNNING:
 
     scene.render(screen)
     pygame.display.update()
-    scene.checkCollision()
     scene = scene.nextScene()

@@ -115,7 +115,7 @@ class MainScene(Scene):
 
         # Check shark collision.
         if pygame.sprite.groupcollide(
-            self.playerGroup, self.sharkGroup, True, False
+            self.playerGroup, self.sharkGroup, True, False, pygame.sprite.collide_mask
         ):
             # Shark collision detected.
             # Game over.

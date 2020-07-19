@@ -72,13 +72,13 @@ class MainScene(Scene):
         # Player movement
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                self.player.accel -= self.player.ACCEL_CONST
+                self.player.accelerateUp()
             if event.key == pygame.K_DOWN:
-                self.player.accel += self.player.ACCEL_CONST
+                self.player.accelerateDown()
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                self.player.accel = 0
+                self.player.dampen()
 
     def render(self, screen):
         currentTime = time_ns()
@@ -110,9 +110,9 @@ class MainScene(Scene):
                 self.spawnSharkAfter = random.random() / SHARK_SPAWN_RATE
             self.spawnSharkAfter -= delta
         # Update
-        self.playerGroup.update()
-        self.garbageGroup.update()
-        self.sharkGroup.update()
+        self.playerGroup.update(delta)
+        self.garbageGroup.update(delta)
+        self.sharkGroup.update(delta)
 
         # Check Collision between garbage and the player
         for garbage in pygame.sprite.groupcollide(

@@ -1,35 +1,25 @@
 import pygame
 from typing import Tuple
-from time import time_ns
-from config import X_LOWER_LIM, X_UPPER_LIM, Y_LOWER_LIM, Y_UPPER_LIM
+from config import X_LOWER_LIM
+from KinemeticBody import KinematicBody
 import random
 
 
-class Shark(pygame.sprite.Sprite):
+class Shark(KinematicBody):
     def __init__(
         self,
         position: Tuple[float, float],
-        velocity: Tuple[float, float] = (random.randint(-250, -200), 0),
+        velocity: Tuple[float, float] = None,
     ):
-        super().__init__()
-        self.image = pygame.image.load("src/assets/images/shark.png")
-        self.image = pygame.transform.scale(self.image, (128, 64))
-        self.position = position
-        self.rect = self.image.get_rect(center=position)
-        self.mask = pygame.mask.from_surface(self.image)
-        self.velocity = velocity
-        self.lastUpdated = time_ns()
+        image = pygame.image.load("src/assets/images/shark.png")
+        image = pygame.transform.scale(image, (128, 64))
+        if velocity is None:
+            velocity = (random.randint(-250, -200), 0)
+        super().__init__(image, position, velocity)
 
-    def update(self):
-        delta = (time_ns() - self.lastUpdated) / 1e9
-        self.lastUpdated = time_ns()
-        self.position = (
-            self.position[0] + self.velocity[0] * delta,
-            self.position[1] + self.velocity[1] * delta,
-        )
+    def update(self, delta: float):
+        super().update(delta)
 
+        # Boundary check.
         if self.position[0] < X_LOWER_LIM:
             self.kill()
-
-        # Update rect.
-        self.rect = self.image.get_rect(center=self.position)

@@ -2,10 +2,11 @@ from Scene import Scene
 from MainScene import MainScene
 import pygame
 from GameAudio import GameAudio
-import time
+
 
 class StartScene(Scene):
     gameMusic = GameAudio(0)
+
     def __init__(self):
         super().__init__()
         font = pygame.font.Font("src/assets/fonts/Lato/Lato-Black.ttf", 32)

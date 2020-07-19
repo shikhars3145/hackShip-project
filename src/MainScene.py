@@ -2,7 +2,6 @@ from Scene import Scene
 import EndScene
 from config import (
     SCREEN_HEIGHT,
-    SCREEN_WIDTH,
     X_UPPER_LIM,
     Y_LOWER_LIM,
     Y_UPPER_LIM,
@@ -72,13 +71,31 @@ class MainScene(Scene):
         # Player movement
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                self.player.accel -= self.player.ACCEL_CONST
-            if event.key == pygame.K_DOWN:
-                self.player.accel += self.player.ACCEL_CONST
+                self.player.acceleration = (
+                    self.player.acceleration[0],
+                    -self.player.ACCEL_CONST,
+                )
+            elif event.key == pygame.K_DOWN:
+                self.player.acceleration = (
+                    self.player.acceleration[0],
+                    self.player.ACCEL_CONST,
+                )
+            elif event.key == pygame.K_LEFT:
+                self.player.acceleration = (
+                    -self.player.ACCEL_CONST,
+                    self.player.acceleration[1],
+                )
+            elif event.key == pygame.K_RIGHT:
+                self.player.acceleration = (
+                    self.player.ACCEL_CONST,
+                    self.player.acceleration[1],
+                )
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                self.player.accel = 0
+                self.player.acceleration = (self.player.acceleration[0], 0)
+            elif event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                self.player.acceleration = (0, self.player.acceleration[1])
 
     def render(self, screen):
         currentTime = time_ns()
@@ -110,9 +127,9 @@ class MainScene(Scene):
                 self.spawnSharkAfter = random.random() / SHARK_SPAWN_RATE
             self.spawnSharkAfter -= delta
         # Update
-        self.playerGroup.update()
-        self.garbageGroup.update()
-        self.sharkGroup.update()
+        self.playerGroup.update(delta)
+        self.garbageGroup.update(delta)
+        self.sharkGroup.update(delta)
 
         # Check Collision between garbage and the player
         for garbage in pygame.sprite.groupcollide(

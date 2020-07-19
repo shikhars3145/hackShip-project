@@ -1,6 +1,7 @@
 from Scene import Scene
 import EndScene
 from config import (
+    SCREEN_WIDTH,
     SCREEN_HEIGHT,
     X_UPPER_LIM,
     Y_LOWER_LIM,
@@ -21,11 +22,11 @@ TRASH_BOTTLE = "src/assets/audio/trashBottle.wav"
 
 # Difficulty factors.
 INITIAL_SCROLL_SPEED = 100
-INITIAL_SHARK_SPAWN_RATE = 0.3
-INITIAL_GARBAGE_SPAWN_RATE = 2
-SCROLL_SPEED_MULTIPLIER = 0.001
-SHARK_SPAWN_RATE_MULTIPLIER = 0.001
-GARBAGE_SPAWN_RATE_MULTIPLIER = 0.001
+INITIAL_SHARK_SPAWN_RATE = 0.1
+INITIAL_GARBAGE_SPAWN_RATE = 1
+SCROLL_SPEED_MULTIPLIER = 0.3
+SHARK_SPAWN_RATE_MULTIPLIER = 0.0009
+GARBAGE_SPAWN_RATE_MULTIPLIER = 0.008
 GARBAGE_BONUS_MULTIPLIER = 10
 GARBAGE_SPEED_DEVIATION = 50
 SHARK_SPEED_DEVIATION = 150
@@ -36,7 +37,7 @@ class MainScene(Scene):
         super().__init__()
 
         # Player
-        self.player = Player((30, (SCREEN_HEIGHT - 64) / 2))
+        self.player = Player((SCREEN_WIDTH / 2, (SCREEN_HEIGHT - 64) / 2))
         self.playerGroup = pygame.sprite.RenderPlain(self.player)
 
         # Shark

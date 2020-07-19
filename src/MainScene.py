@@ -12,6 +12,7 @@ from Shark import Shark
 from Garbage import Garbage
 from GameAudio import GameAudio
 from time import time_ns
+from Rail import ForegroundRail, MiddlegroundRail, BackgroundRail
 import pygame
 import random
 
@@ -19,6 +20,7 @@ PEACEFUL_LOOP = "src/assets/audio/bgmLoop.wav"
 PEACEFUL_LOOP_COUNT = 1
 DANGER_LOOP = "src/assets/audio/bgmLoopShark.wav"
 TRASH_BOTTLE = "src/assets/audio/trashBottle.wav"
+PARALLAX_RATIO = 0.5
 
 # Difficulty factors.
 INITIAL_SCROLL_SPEED = 100
@@ -57,6 +59,15 @@ class MainScene(Scene):
         self.sharkSpawnRate = INITIAL_SHARK_SPAWN_RATE
         # Average spawn rate of garbage (trash / sec)
         self.garbageSpawnRate = INITIAL_GARBAGE_SPAWN_RATE
+
+        # Background
+        self.foreground = ForegroundRail((0, 400), -600, -self.scrollSpeed)
+        self.middleground = MiddlegroundRail(
+            (0, 200), -600, -self.scrollSpeed * PARALLAX_RATIO
+        )
+        self.background = BackgroundRail(
+            (0, 0), -1024, -self.scrollSpeed * PARALLAX_RATIO ** 2
+        )
 
         # Performance
         self.garbageCollected = 0
@@ -181,6 +192,9 @@ class MainScene(Scene):
         self.playerGroup.update(delta)
         self.garbageGroup.update(delta)
         self.sharkGroup.update(delta)
+        self.foreground.update(delta)
+        self.middleground.update(delta)
+        self.background.update(delta)
 
         # Check Collision between garbage and the player
         for garbage in pygame.sprite.groupcollide(
@@ -206,6 +220,9 @@ class MainScene(Scene):
             self.gameOver = True
 
         # Render Player
+        self.background.draw(screen)
+        self.middleground.draw(screen)
+        self.foreground.draw(screen)
         self.playerGroup.draw(screen)
         self.garbageGroup.draw(screen)
         self.sharkGroup.draw(screen)

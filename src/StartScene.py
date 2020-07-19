@@ -3,6 +3,7 @@ from MainScene import MainScene
 import pygame
 from GameAudio import GameAudio
 from Rail import ForegroundRail, MiddlegroundRail, BackgroundRail
+from config import SCREEN_WIDTH, SCREEN_HEIGHT
 from time import time_ns
 
 PARALLAX_RATIO = 0.5
@@ -12,12 +13,12 @@ class StartScene(Scene):
     def __init__(self):
         super().__init__()
         font = pygame.font.Font("src/assets/fonts/Lato/Lato-Black.ttf", 32)
-        titleFont = pygame.font.Font("src/assets/fonts/Lato/Lato-Black.ttf", 64)
-        self.title = titleFont.render(
-            "Trash Hunt", True, (255, 255, 255)
+        titleFont = pygame.font.Font(
+            "src/assets/fonts/Lato/Lato-Black.ttf", 64
         )
+        self.title = titleFont.render("Trash Hunt", True, (255, 255, 255))
         self.instruction = font.render(
-            "Press Enter to Start ...", True, (255, 255, 255)
+            "Press Enter to Start", True, (255, 255, 255)
         )
         self.shouldStart = False
 
@@ -50,8 +51,16 @@ class StartScene(Scene):
         self.background.draw(screen)
         self.middleground.draw(screen)
         self.foreground.draw(screen)
-        screen.blit(self.title, (100, 100))
-        screen.blit(self.instruction, (400, 300))
+        screen.blit(
+            self.title,
+            self.title.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 100)),
+        )
+        screen.blit(
+            self.instruction,
+            self.instruction.get_rect(
+                center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+            ),
+        )
 
     def nextScene(self):
         if self.shouldStart:

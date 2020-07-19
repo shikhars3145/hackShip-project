@@ -61,7 +61,7 @@ class MainScene(Scene):
         self.garbageSpawnRate = INITIAL_GARBAGE_SPAWN_RATE
 
         # Background
-        self.foreground = ForegroundRail((0, 400), -600, -self.scrollSpeed)
+        self.foreground = ForegroundRail((0, 410), -600, -self.scrollSpeed)
         self.middleground = MiddlegroundRail(
             (0, 200), -600, -self.scrollSpeed * PARALLAX_RATIO
         )

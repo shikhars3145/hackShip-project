@@ -11,11 +11,17 @@ from Player import Player
 from Shark import Shark
 from Garbage import Garbage
 from GameAudio import GameAudio
+from time import time_ns
 import pygame
 import random
 
-BMG_LOOP = "src/assets/audio/bgmLoop.wav"
+PEACEFUL_LOOP = "src/assets/audio/bgmLoop.wav"
+PEACEFUL_LOOP_COUNT = 1
+DANGER_LOOP = "src/assets/audio/bgmLoopShark.wav"
 TRASH_BOTTLE = "src/assets/audio/trashBottle.wav"
+
+# Average spawn rate of sharks (sharks / sec)
+SHARK_SPAWN_RATE = 0.3
 
 
 class MainScene(Scene):
@@ -31,9 +37,6 @@ class MainScene(Scene):
 
         # Shark
         self.sharkGroup = pygame.sprite.RenderPlain()
-        self.sharkGroup.add(
-            Shark((X_UPPER_LIM, random.randint(Y_LOWER_LIM, Y_UPPER_LIM)))
-        )
 
         # Garbage
         self.garbageGroup = pygame.sprite.RenderPlain()
@@ -52,11 +55,20 @@ class MainScene(Scene):
             "src/assets/fonts/Lato/Lato-Black.ttf", 32
         )
 
+        # Shark spawn flag.
+        self.shouldSpawnSharks = False
+
+        # Shark spawn timer.
+        self.spawnSharkAfter = 0
+
         # Game over flag.
         self.gameOver = False
 
         # Audio
-        self.gameMusic.playLooped(BMG_LOOP, 0.3)
+        self.gameMusic.playLooped(PEACEFUL_LOOP, 0.3, PEACEFUL_LOOP_COUNT)
+
+        # Timestamp of the last render.
+        self.lastRendered = time_ns()
 
     def handleEvent(self, event):
         # Player movement
@@ -71,6 +83,24 @@ class MainScene(Scene):
                 self.player.accel = 0
 
     def render(self, screen):
+        currentTime = time_ns()
+        delta = (currentTime - self.lastRendered) / 1e9
+        self.lastRendered = currentTime
+
+        # Start spawning sharks after peaceful theme ends.
+        if not self.gameMusic.is_busy():
+            self.shouldSpawnSharks = True
+            self.gameMusic.playLooped(DANGER_LOOP, 0.3)
+
+        if self.shouldSpawnSharks:
+            if self.spawnSharkAfter <= 0:
+                self.sharkGroup.add(
+                    Shark(
+                        (X_UPPER_LIM, random.randint(Y_LOWER_LIM, Y_UPPER_LIM))
+                    )
+                )
+                self.spawnSharkAfter = random.random() / SHARK_SPAWN_RATE
+            self.spawnSharkAfter -= delta
         # Update
         self.playerGroup.update()
         self.garbageGroup.update()
@@ -85,7 +115,7 @@ class MainScene(Scene):
 
         # Check shark collision.
         if pygame.sprite.groupcollide(
-            self.playerGroup, self.sharkGroup, True, False
+            self.playerGroup, self.sharkGroup, True, False, pygame.sprite.collide_mask
         ):
             # Shark collision detected.
             # Game over.

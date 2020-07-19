@@ -47,17 +47,7 @@ class Garbage(pygame.sprite.Sprite):
         )
 
         if self.position[0] < X_LOWER_LIM:
-            self.image = pygame.image.load(getRandomGarbageImagePath())
-            self.position = (
-                X_UPPER_LIM,
-                random.randint(Y_LOWER_LIM, Y_UPPER_LIM),
-            )
-            self.velocity = (random.randint(-150, -100), 0)
+            self.kill()
 
         # Update rect.
         self.rect = self.image.get_rect(center=self.position)
-
-    def reset(self):
-        self.image = pygame.image.load(getRandomGarbageImagePath())
-        self.position = (X_UPPER_LIM, random.randint(Y_LOWER_LIM, Y_UPPER_LIM))
-        self.velocity = (random.randint(-150, -100), 0)

@@ -23,6 +23,9 @@ TRASH_BOTTLE = "src/assets/audio/trashBottle.wav"
 # Average spawn rate of sharks (sharks / sec)
 SHARK_SPAWN_RATE = 0.3
 
+# Average spawn rate of garbage (trash / sec)
+GARBAGE_SPAWN_RATE = 2
+
 
 class MainScene(Scene):
     gameMusic = GameAudio(1)
@@ -40,14 +43,6 @@ class MainScene(Scene):
 
         # Garbage
         self.garbageGroup = pygame.sprite.RenderPlain()
-        for i in range(5):
-            self.garbage = Garbage(
-                (
-                    random.randint(SCREEN_WIDTH // 4, X_UPPER_LIM),
-                    random.randint(Y_LOWER_LIM, Y_UPPER_LIM),
-                )
-            )
-            self.garbageGroup.add(self.garbage)
 
         # Scoring
         self.scoreInt = 0
@@ -60,6 +55,9 @@ class MainScene(Scene):
 
         # Shark spawn timer.
         self.spawnSharkAfter = 0
+
+        # Garbage spawn timer.
+        self.spawnGarbageAfter = 0
 
         # Game over flag.
         self.gameOver = False
@@ -87,6 +85,16 @@ class MainScene(Scene):
         delta = (currentTime - self.lastRendered) / 1e9
         self.lastRendered = currentTime
 
+        # Spawn garbage.
+        if self.spawnGarbageAfter <= 0:
+            self.garbageGroup.add(
+                Garbage(
+                    (X_UPPER_LIM, random.randint(Y_LOWER_LIM, Y_UPPER_LIM))
+                )
+            )
+            self.spawnGarbageAfter = random.random() / GARBAGE_SPAWN_RATE
+        self.spawnGarbageAfter -= delta
+
         # Start spawning sharks after peaceful theme ends.
         if not self.gameMusic.is_busy():
             self.shouldSpawnSharks = True
@@ -107,15 +115,23 @@ class MainScene(Scene):
         self.sharkGroup.update()
 
         # Check Collision between garbage and the player
-        for garbageInstance in self.garbageGroup:
-            if pygame.sprite.collide_mask(self.player, garbageInstance):
-                self.scoreInt += 1
-                self.trashFXbottle.playFX(TRASH_BOTTLE, 0.15)
-                garbageInstance.reset()
+        for garbage in pygame.sprite.groupcollide(
+            self.garbageGroup,
+            self.playerGroup,
+            True,
+            False,
+            pygame.sprite.collide_mask,
+        ):
+            self.scoreInt += 1
+            self.trashFXbottle.playFX(TRASH_BOTTLE, 0.15)
 
         # Check shark collision.
         if pygame.sprite.groupcollide(
-            self.playerGroup, self.sharkGroup, True, False, pygame.sprite.collide_mask
+            self.playerGroup,
+            self.sharkGroup,
+            True,
+            False,
+            pygame.sprite.collide_mask,
         ):
             # Shark collision detected.
             # Game over.

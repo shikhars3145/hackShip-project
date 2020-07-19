@@ -7,9 +7,7 @@ from time import time_ns
 # Player sprite.
 class Player(pygame.sprite.Sprite):
     def __init__(
-        self,
-        position: Tuple[float, float],
-        velocity: Tuple[float, float] = (0, 0),
+        self, position: Tuple[float, float], velocity: Tuple[float, float] = (0, 0),
     ):
         super().__init__()
         self.image = pygame.image.load("src/assets/images/player.png")

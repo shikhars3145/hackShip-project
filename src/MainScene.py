@@ -1,17 +1,26 @@
 from Scene import Scene
-from config import SCREEN_HEIGHT, SCREEN_WIDTH, X_LOWER_LIM, X_UPPER_LIM, Y_LOWER_LIM, Y_UPPER_LIM
+from config import (
+    SCREEN_HEIGHT,
+    SCREEN_WIDTH,
+    X_LOWER_LIM,
+    X_UPPER_LIM,
+    Y_LOWER_LIM,
+    Y_UPPER_LIM,
+)
 from Player import Player
 from Garbage import Garbage
 from GameAudio import GameAudio
 import pygame
 import random
 
-BMG_LOOP = 'src/assets/audio/bgmLoop.wav'
-TRASH_BOTTLE = 'src/assets/audio/trashBottle.wav'
+BMG_LOOP = "src/assets/audio/bgmLoop.wav"
+TRASH_BOTTLE = "src/assets/audio/trashBottle.wav"
+
 
 class MainScene(Scene):
     gameMusic = GameAudio(1)
     trashFXbottle = GameAudio(2)
+
     def __init__(self):
         super().__init__()
 
@@ -22,12 +31,17 @@ class MainScene(Scene):
         # Garbage
         self.garbageGroup = pygame.sprite.RenderPlain()
         for i in range(5):
-            self.garbage = Garbage((random.randint(SCREEN_WIDTH // 4 , X_UPPER_LIM), random.randint(Y_LOWER_LIM, Y_UPPER_LIM)))
+            self.garbage = Garbage(
+                (
+                    random.randint(SCREEN_WIDTH // 4, X_UPPER_LIM),
+                    random.randint(Y_LOWER_LIM, Y_UPPER_LIM),
+                )
+            )
             self.garbageGroup.add(self.garbage)
 
         # Scoring
         self.scoreInt = 0
-        self.scoreFont = pygame.font.Font('src/assets/fonts/Lato/Lato-Black.ttf', 32)
+        self.scoreFont = pygame.font.Font("src/assets/fonts/Lato/Lato-Black.ttf", 32)
 
         # Audio
         self.gameMusic.playLooped(BMG_LOOP, 0.3)
@@ -52,8 +66,9 @@ class MainScene(Scene):
         # Render Garbage
         self.garbageGroup.draw(screen)
         # Render score
-        screen.blit(self.scoreFont.render(str(self.scoreInt), True, (255, 255, 255)), (20, 20))
-
+        screen.blit(
+            self.scoreFont.render(str(self.scoreInt), True, (255, 255, 255)), (20, 20)
+        )
 
     def checkCollision(self):
         for garbageInstance in self.garbageGroup:

@@ -4,12 +4,14 @@ from typing import Tuple
 
 class KinematicBody(pygame.sprite.Sprite):
     """Sprite with physical properties"""
+
     def __init__(
         self,
         image,
         position: Tuple[float, float],
         velocity: Tuple[float, float] = (0, 0),
-        acceleration: Tuple[float, float] = (0, 0)
+        acceleration: Tuple[float, float] = (0, 0),
+        damping_constant: float = 0,
     ):
         super().__init__()
         self.image = image
@@ -18,14 +20,22 @@ class KinematicBody(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(image)
         self.velocity = velocity
         self.acceleration = acceleration
+        self.damping_constant = damping_constant
 
     def update(self, delta: float):
         self.velocity = (
             self.velocity[0] + self.acceleration[0] * delta,
-            self.velocity[1] + self.acceleration[1] * delta
+            self.velocity[1] + self.acceleration[1] * delta,
         )
+        if self.damping_constant != 0:
+            self.velocity = (
+                self.velocity[0]
+                - self.velocity[0] * self.damping_constant * delta,
+                self.velocity[1]
+                - self.velocity[1] * self.damping_constant * delta,
+            )
         self.position = (
             self.position[0] + self.velocity[0] * delta,
-            self.position[1] + self.velocity[1] * delta
+            self.position[1] + self.velocity[1] * delta,
         )
         self.rect = self.image.get_rect(center=self.position)

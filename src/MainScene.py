@@ -2,7 +2,6 @@ from Scene import Scene
 import EndScene
 from config import (
     SCREEN_HEIGHT,
-    SCREEN_WIDTH,
     X_UPPER_LIM,
     Y_LOWER_LIM,
     Y_UPPER_LIM,
@@ -72,13 +71,19 @@ class MainScene(Scene):
         # Player movement
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                self.player.accelerateUp()
+                self.player.acceleration = (
+                    self.player.acceleration[0],
+                    -self.player.ACCEL_CONST,
+                )
             if event.key == pygame.K_DOWN:
-                self.player.accelerateDown()
+                self.player.acceleration = (
+                    self.player.acceleration[0],
+                    self.player.ACCEL_CONST,
+                )
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                self.player.dampen()
+                self.player.acceleration = (self.player.acceleration[0], 0)
 
     def render(self, screen):
         currentTime = time_ns()

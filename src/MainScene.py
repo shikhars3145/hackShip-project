@@ -2,7 +2,6 @@ from Scene import Scene
 from config import (
     SCREEN_HEIGHT,
     SCREEN_WIDTH,
-    X_LOWER_LIM,
     X_UPPER_LIM,
     Y_LOWER_LIM,
     Y_UPPER_LIM,
@@ -41,7 +40,9 @@ class MainScene(Scene):
 
         # Scoring
         self.scoreInt = 0
-        self.scoreFont = pygame.font.Font("src/assets/fonts/Lato/Lato-Black.ttf", 32)
+        self.scoreFont = pygame.font.Font(
+            "src/assets/fonts/Lato/Lato-Black.ttf", 32
+        )
 
         # Audio
         self.gameMusic.playLooped(BMG_LOOP, 0.3)
@@ -67,7 +68,8 @@ class MainScene(Scene):
         self.garbageGroup.draw(screen)
         # Render score
         screen.blit(
-            self.scoreFont.render(str(self.scoreInt), True, (255, 255, 255)), (20, 20)
+            self.scoreFont.render(str(self.scoreInt), True, (255, 255, 255)),
+            (20, 20),
         )
 
     def checkCollision(self):

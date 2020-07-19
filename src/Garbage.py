@@ -1,11 +1,8 @@
 import pygame
-import math
 import random
 from typing import Tuple
 from time import time_ns
 from config import (
-    SCREEN_HEIGHT,
-    SCREEN_WIDTH,
     X_LOWER_LIM,
     X_UPPER_LIM,
     Y_LOWER_LIM,
@@ -17,9 +14,7 @@ from config import (
 class Garbage(pygame.sprite.Sprite):
     def __init__(
         self,
-        position: Tuple[
-            float, float
-        ],  # (random.randint(SCREEN_WIDTH // 4 , X_UPPER_LIM), random.randint(Y_LOWER_LIM, Y_UPPER_LIM)),
+        position: Tuple[float, float],
         velocity: Tuple[float, float] = (random.randint(-150, -100), 0),
     ):
         super().__init__()
@@ -44,9 +39,14 @@ class Garbage(pygame.sprite.Sprite):
 
         if self.position[0] < X_LOWER_LIM:
             self.image = pygame.image.load(
-                "src/assets/images/garbage" + str(random.randint(1, 2)) + ".png"
+                "src/assets/images/garbage"
+                + str(random.randint(1, 2))
+                + ".png"
             )
-            self.position = (X_UPPER_LIM, random.randint(Y_LOWER_LIM, Y_UPPER_LIM))
+            self.position = (
+                X_UPPER_LIM,
+                random.randint(Y_LOWER_LIM, Y_UPPER_LIM),
+            )
             self.velocity = (random.randint(-150, -100), 0)
 
         # Update rect.

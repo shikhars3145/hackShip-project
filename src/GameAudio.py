@@ -1,5 +1,4 @@
 import pygame
-import time
 
 
 class GameAudio:
@@ -28,6 +27,6 @@ class GameAudio:
         channel = pygame.mixer.Channel(self.channel)
         channel.queue(sound)
 
-    def is_busy():
+    def is_busy(self):
         channel = pygame.mixer.Channel(self.channel)
         return channel.get_busy()

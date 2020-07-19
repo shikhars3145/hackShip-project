@@ -27,9 +27,6 @@ GARBAGE_SPAWN_RATE = 2
 
 
 class MainScene(Scene):
-    gameMusic = GameAudio(1)
-    trashFXbottle = GameAudio(2)
-
     def __init__(self):
         super().__init__()
 
@@ -42,6 +39,10 @@ class MainScene(Scene):
 
         # Garbage
         self.garbageGroup = pygame.sprite.RenderPlain()
+
+        # Audio
+        self.gameMusic = GameAudio(1)
+        self.trashFXbottle = GameAudio(2)
 
         # Scoring
         self.scoreInt = 0

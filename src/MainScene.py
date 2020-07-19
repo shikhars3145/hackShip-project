@@ -1,9 +1,10 @@
 from Scene import Scene
-from config import SCREEN_HEIGHT
+from config import SCREEN_HEIGHT, SCREEN_WIDTH, X_LOWER_LIM, X_UPPER_LIM, Y_LOWER_LIM, Y_UPPER_LIM
 from Player import Player
 from Garbage import Garbage
 from GameAudio import GameAudio
 import pygame
+import random
 
 BMG_LOOP = 'src/assets/audio/bgmLoop.wav'
 TRASH_BOTTLE = 'src/assets/audio/trashBottle.wav'
@@ -21,7 +22,7 @@ class MainScene(Scene):
         # Garbage
         self.garbageGroup = pygame.sprite.RenderPlain()
         for i in range(5):
-            self.garbage = Garbage()
+            self.garbage = Garbage((random.randint(SCREEN_WIDTH // 4 , X_UPPER_LIM), random.randint(Y_LOWER_LIM, Y_UPPER_LIM)))
             self.garbageGroup.add(self.garbage)
 
         # Scoring

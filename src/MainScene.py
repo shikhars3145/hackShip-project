@@ -7,6 +7,7 @@ from config import (
     Y_UPPER_LIM,
 )
 from Player import Player
+from Shark import Shark
 from Garbage import Garbage
 from GameAudio import GameAudio
 import pygame
@@ -27,6 +28,12 @@ class MainScene(Scene):
         self.player = Player((30, (SCREEN_HEIGHT - 64) / 2))
         self.playerGroup = pygame.sprite.RenderPlain(self.player)
 
+        # Shark
+        self.sharkGroup = pygame.sprite.RenderPlain()
+        self.sharkGroup.add(
+            Shark((X_UPPER_LIM, random.randint(Y_LOWER_LIM, Y_UPPER_LIM)))
+        )
+
         # Garbage
         self.garbageGroup = pygame.sprite.RenderPlain()
         for i in range(5):
@@ -44,6 +51,9 @@ class MainScene(Scene):
             "src/assets/fonts/Lato/Lato-Black.ttf", 32
         )
 
+        # Game over flag.
+        self.gameOver = False
+
         # Audio
         self.gameMusic.playLooped(BMG_LOOP, 0.3)
 
@@ -60,8 +70,10 @@ class MainScene(Scene):
                 self.player.accel = 0
 
     def render(self, screen):
+        # Update
         self.playerGroup.update()
         self.garbageGroup.update()
+        self.sharkGroup.update()
 
         # Check Collision between garbage and the player
         for garbageInstance in self.garbageGroup:
@@ -70,10 +82,18 @@ class MainScene(Scene):
                 self.trashFXbottle.playFX(TRASH_BOTTLE, 0.15)
                 garbageInstance.reset()
 
+        # Check shark collision.
+        if pygame.sprite.groupcollide(
+            self.playerGroup, self.sharkGroup, True, False
+        ):
+            # Shark collision detected.
+            # Game over.
+            self.gameOver = True
+
         # Render Player
         self.playerGroup.draw(screen)
-        # Render Garbage
         self.garbageGroup.draw(screen)
+        self.sharkGroup.draw(screen)
         # Render score
         screen.blit(
             self.scoreFont.render(str(self.scoreInt), True, (255, 255, 255)),

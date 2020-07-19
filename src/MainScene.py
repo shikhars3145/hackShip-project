@@ -75,15 +75,27 @@ class MainScene(Scene):
                     self.player.acceleration[0],
                     -self.player.ACCEL_CONST,
                 )
-            if event.key == pygame.K_DOWN:
+            elif event.key == pygame.K_DOWN:
                 self.player.acceleration = (
                     self.player.acceleration[0],
                     self.player.ACCEL_CONST,
+                )
+            elif event.key == pygame.K_LEFT:
+                self.player.acceleration = (
+                    -self.player.ACCEL_CONST,
+                    self.player.acceleration[1],
+                )
+            elif event.key == pygame.K_RIGHT:
+                self.player.acceleration = (
+                    self.player.ACCEL_CONST,
+                    self.player.acceleration[1],
                 )
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 self.player.acceleration = (self.player.acceleration[0], 0)
+            elif event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                self.player.acceleration = (0, self.player.acceleration[1])
 
     def render(self, screen):
         currentTime = time_ns()

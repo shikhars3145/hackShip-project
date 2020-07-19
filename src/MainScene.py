@@ -18,12 +18,7 @@ PEACEFUL_LOOP = "src/assets/audio/bgmLoop.wav"
 PEACEFUL_LOOP_COUNT = 1
 DANGER_LOOP = "src/assets/audio/bgmLoopShark.wav"
 TRASH_BOTTLE = "src/assets/audio/trashBottle.wav"
-
-# Average spawn rate of sharks (sharks / sec)
-SHARK_SPAWN_RATE = 0.3
-
-# Average spawn rate of garbage (trash / sec)
-GARBAGE_SPAWN_RATE = 2
+GARBAGE_BONUS_MULTIPLIER = 10
 
 
 class MainScene(Scene):
@@ -44,8 +39,19 @@ class MainScene(Scene):
         self.gameMusic = GameAudio(1)
         self.trashFXbottle = GameAudio(2)
 
-        # Scoring
-        self.scoreInt = 0
+        # Difficulty parameters
+        # Scrolling speed
+        self.scrollSpeed = 100
+        # Average spawn rate of sharks (sharks / sec)
+        self.sharkSpawnRate = 0.3
+        # Average spawn rate of garbage (trash / sec)
+        self.garbageSpawnRate = 2
+
+        # Performance
+        self.garbageCollected = 0
+        self.startTime = time_ns()
+
+        # UI
         self.scoreFont = pygame.font.Font(
             "src/assets/fonts/Lato/Lato-Black.ttf", 32
         )
@@ -67,6 +73,10 @@ class MainScene(Scene):
 
         # Timestamp of the last render.
         self.lastRendered = time_ns()
+
+    def score(self):
+        timeElapsed = int((time_ns() - self.startTime) // 1e9)
+        return timeElapsed + self.garbageCollected * GARBAGE_BONUS_MULTIPLIER
 
     def handleEvent(self, event):
         # Player movement
@@ -110,7 +120,7 @@ class MainScene(Scene):
                     (X_UPPER_LIM, random.randint(Y_LOWER_LIM, Y_UPPER_LIM))
                 )
             )
-            self.spawnGarbageAfter = random.random() / GARBAGE_SPAWN_RATE
+            self.spawnGarbageAfter = random.random() / self.garbageSpawnRate
         self.spawnGarbageAfter -= delta
 
         # Start spawning sharks after peaceful theme ends.
@@ -125,7 +135,7 @@ class MainScene(Scene):
                         (X_UPPER_LIM, random.randint(Y_LOWER_LIM, Y_UPPER_LIM))
                     )
                 )
-                self.spawnSharkAfter = random.random() / SHARK_SPAWN_RATE
+                self.spawnSharkAfter = random.random() / self.sharkSpawnRate
             self.spawnSharkAfter -= delta
         # Update
         self.playerGroup.update(delta)
@@ -140,7 +150,7 @@ class MainScene(Scene):
             False,
             pygame.sprite.collide_mask,
         ):
-            self.scoreInt += 1
+            self.garbageCollected += 1
             self.trashFXbottle.playFX(TRASH_BOTTLE, 0.15)
 
         # Check shark collision.
@@ -161,12 +171,12 @@ class MainScene(Scene):
         self.sharkGroup.draw(screen)
         # Render score
         screen.blit(
-            self.scoreFont.render(str(self.scoreInt), True, (255, 255, 255)),
+            self.scoreFont.render(str(self.score()), True, (255, 255, 255)),
             (20, 20),
         )
 
     def nextScene(self):
         if self.gameOver:
             self.gameMusic.stop()
-            return EndScene.EndScene(self.scoreInt)
+            return EndScene.EndScene(self.score())
         return self

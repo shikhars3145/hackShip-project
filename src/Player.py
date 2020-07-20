@@ -2,6 +2,7 @@ import pygame
 from typing import Tuple
 from KinemeticBody import KinematicBody
 from config import SCREEN_HEIGHT, SCREEN_WIDTH
+from resource import getResource
 
 
 # Player sprite.
@@ -10,7 +11,7 @@ class Player(KinematicBody):
         self, position: Tuple[float, float],
     ):
         super().__init__(
-            pygame.image.load("src/assets/images/player.png"), position,
+            pygame.image.load(getResource("images/player.png")), position,
         )
         self.damping_constant = 1
         self.ACCEL_CONST = 2500

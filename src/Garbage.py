@@ -5,9 +5,11 @@ from config import X_LOWER_LIM
 from os import walk
 from os.path import join
 from KinemeticBody import KinematicBody
+from resource import getResource
+
 
 GARBAGE_IMAGES: Set[str] = set()
-for (dirpath, _, filenames) in walk("src/assets/images/garbage"):
+for (dirpath, _, filenames) in walk(getResource("images/garbage")):
     for filename in filenames:
         GARBAGE_IMAGES.add(join(dirpath, filename))
 

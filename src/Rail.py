@@ -1,5 +1,6 @@
 import pygame
 from typing import List, Tuple
+from resource import getResource
 
 
 class RailSprite(pygame.sprite.Sprite):
@@ -53,7 +54,7 @@ class ForegroundRail(Rail):
         self, position: Tuple[float, float], limit: float, speed: float
     ):
         source = pygame.image.load(
-            "src/assets/images/underwater-fantasy/foreground-merged.png"
+            getResource("images/underwater-fantasy/foreground-merged.png")
         )
         images = [source] * 5
         super().__init__(position, limit, speed, images)
@@ -64,7 +65,7 @@ class MiddlegroundRail(Rail):
         self, position: Tuple[float, float], limit: float, speed: float
     ):
         source = pygame.image.load(
-            "src/assets/images/underwater-fantasy/sand.png"
+            getResource("images/underwater-fantasy/sand.png")
         )
         source = pygame.transform.scale2x(source)
         images = [source] * 5
@@ -76,7 +77,7 @@ class BackgroundRail(Rail):
         self, position: Tuple[float, float], limit: float, speed: float
     ):
         source = pygame.image.load(
-            "src/assets/images/underwater-fantasy/far.png"
+            getResource("images/underwater-fantasy/far.png")
         )
         source = pygame.transform.scale2x(source)
         source = pygame.transform.scale2x(source)

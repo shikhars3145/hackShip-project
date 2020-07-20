@@ -1,4 +1,5 @@
 from Scene import Scene
+from resource import getResource
 import MainScene
 import pygame
 
@@ -7,7 +8,7 @@ class EndScene(Scene):
     def __init__(self, score: int):
         super().__init__()
 
-        font = pygame.font.Font("src/assets/fonts/Lato/Lato-Black.ttf", 32)
+        font = pygame.font.Font(getResource("fonts/Lato/Lato-Black.ttf"), 32)
         self.title = font.render(
             "Game Over", True, (255, 0, 0)
         )

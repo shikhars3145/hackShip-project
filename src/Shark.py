@@ -2,6 +2,7 @@ import pygame
 from typing import Tuple
 from config import X_LOWER_LIM
 from KinemeticBody import KinematicBody
+from resource import getResource
 import random
 
 
@@ -11,7 +12,7 @@ class Shark(KinematicBody):
         position: Tuple[float, float],
         velocity: Tuple[float, float] = None,
     ):
-        image = pygame.image.load("src/assets/images/shark.png")
+        image = pygame.image.load(getResource("images/shark.png"))
         image = pygame.transform.scale(image, (128, 64))
         if velocity is None:
             velocity = (random.randint(-250, -200), 0)

@@ -4,6 +4,7 @@ import pygame
 from GameAudio import GameAudio
 from Rail import ForegroundRail, MiddlegroundRail, BackgroundRail
 from config import SCREEN_WIDTH, SCREEN_HEIGHT
+from resource import getResource
 from time import time_ns
 
 PARALLAX_RATIO = 0.5
@@ -12,9 +13,9 @@ PARALLAX_RATIO = 0.5
 class StartScene(Scene):
     def __init__(self):
         super().__init__()
-        font = pygame.font.Font("src/assets/fonts/Lato/Lato-Black.ttf", 32)
+        font = pygame.font.Font(getResource("fonts/Lato/Lato-Black.ttf"), 32)
         titleFont = pygame.font.Font(
-            "src/assets/fonts/Lato/Lato-Black.ttf", 64
+            getResource("fonts/Lato/Lato-Black.ttf"), 64
         )
         self.title = titleFont.render("Trash Hunt", True, (255, 255, 255))
         self.instruction = font.render(
@@ -24,7 +25,7 @@ class StartScene(Scene):
 
         # Audio
         self.gameMusic = GameAudio(0)
-        self.gameMusic.playLooped("src/assets/audio/bgmLoopIntro.wav", 0.3)
+        self.gameMusic.playLooped(getResource("audio/bgmLoopIntro.wav"), 0.3)
 
         # Background
         self.scrollSpeed = 300

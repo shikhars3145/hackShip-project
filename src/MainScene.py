@@ -13,13 +13,14 @@ from Garbage import Garbage
 from GameAudio import GameAudio
 from time import time_ns
 from Rail import ForegroundRail, MiddlegroundRail, BackgroundRail
+from resource import getResource
 import pygame
 import random
 
-PEACEFUL_LOOP = "src/assets/audio/bgmLoop.wav"
+PEACEFUL_LOOP = getResource("audio/bgmLoop.wav")
 PEACEFUL_LOOP_COUNT = 1
-DANGER_LOOP = "src/assets/audio/bgmLoopShark.wav"
-TRASH_BOTTLE = "src/assets/audio/trashBottle.wav"
+DANGER_LOOP = getResource("audio/bgmLoopShark.wav")
+TRASH_BOTTLE = getResource("audio/trashBottle.wav")
 PARALLAX_RATIO = 0.5
 
 # Difficulty factors.
@@ -75,7 +76,7 @@ class MainScene(Scene):
 
         # UI
         self.scoreFont = pygame.font.Font(
-            "src/assets/fonts/Lato/Lato-Black.ttf", 32
+            getResource("fonts/Lato/Lato-Black.ttf"), 32
         )
 
         # Shark spawn flag.

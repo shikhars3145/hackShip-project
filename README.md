@@ -44,3 +44,9 @@ Make sure you have up-to-date dependencies.
     - `assets` : Directory for binary asset files.
         - `fonts`
         - `images`
+
+### Packaging
+Run the following command to package the game.
+```bash
+pyinstaller --onefile -w --add-data "src/assets/;." src/main.py
+```

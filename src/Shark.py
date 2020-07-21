@@ -7,6 +7,7 @@ from animation import splitImage
 import random
 
 FRAME_RATE = 10  # per second
+SHARK_SPRITE_SHEET = pygame.image.load(getResource("images/shark.png"))
 
 
 class Shark(KinematicBody):
@@ -15,8 +16,7 @@ class Shark(KinematicBody):
         position: Tuple[float, float],
         velocity: Tuple[float, float] = None,
     ):
-        original = pygame.image.load(getResource("images/shark.png"))
-        self.frames = splitImage(original, 4, 3)[3:6]
+        self.frames = splitImage(SHARK_SPRITE_SHEET, 4, 3)[3:6]
         self.currentFrame = 0
         self.timeToNextFrame = 0
         if velocity is None:
